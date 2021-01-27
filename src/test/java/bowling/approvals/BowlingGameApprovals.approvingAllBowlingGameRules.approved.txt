@@ -4,5 +4,8 @@
         {"firstRoll": 2, "secondRoll": 6, frameScore: 8, runningScore: 8},
         {"firstRoll": 5, "secondRoll": 1, frameScore: 6, runningScore: 14},
         {"firstRoll": 5, "secondRoll": 5, frameScore: 11, runningScore: 25},
+        {"firstRoll": 1, "secondRoll": 0, frameScore: 1, runningScore: 26},
+        {"firstRoll": 10, "secondRoll": null, frameScore: 16, runningScore: 42},
+        {"firstRoll": 5, "secondRoll": 1, frameScore: 6, runningScore: 48},
     ]
 }

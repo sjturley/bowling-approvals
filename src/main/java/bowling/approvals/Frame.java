@@ -7,6 +7,8 @@ public class Frame {
     Integer runningScore;
     Frame previousFrame;
 
+    FrameScoreState state = new OpenScoringState(this);
+
     public Frame(Frame previousFrame) {
         this.previousFrame = previousFrame;
     }
@@ -14,31 +16,39 @@ public class Frame {
     public void addRoll(int roll) {
         if (firstRoll == null) {
             firstRoll = roll;
+            if (wasStrike()) {
+                state = new StrikeScoringState(this);
+                closeFrame();
+            }
         } else {
             secondRoll = roll;
+            if(wasSpare()) {
+                state = new SpareScoringState(this);
+            }
             closeFrame();
         }
     }
 
     private void closeFrame() {
-        potentiallyAddBonusToPreviousFrame();
-        frameScore = firstRoll + secondRoll;
+        // done in the state
+        if (previousFrame != null) {
+            previousFrame.state.potentiallyAddBonusToPreviousFrame(firstRoll, secondRoll);
+        }
+//        frameScore = state.score(firstRoll, secondRoll, previousFrame);
+        frameScore = firstRoll + (this.secondRoll == null ? 0 : this.secondRoll);
         runningScore = calculateRunningScore();
     }
 
-    private void potentiallyAddBonusToPreviousFrame() {
-        if (previousFrame != null && previousFrame.wasSpare()) {
-            previousFrame.frameScore += firstRoll;
-            previousFrame.runningScore += firstRoll;
-        }
+    public boolean wasStrike() {
+        return firstRoll == 10;
     }
 
-    private boolean wasSpare() {
-        return firstRoll + secondRoll == 10;
+    public boolean wasSpare() {
+        return !wasStrike() && firstRoll + secondRoll == 10;
     }
 
     public boolean isDone() {
-        return firstRoll != null && secondRoll != null;
+        return firstRoll != null && (wasStrike() || secondRoll != null);
     }
 
     private int calculateRunningScore() {

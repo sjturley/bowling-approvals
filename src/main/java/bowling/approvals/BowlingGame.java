@@ -21,7 +21,7 @@ public class BowlingGame {
     }
 
     public void roll(int i) {
-         if (currentFrame.isDone()) {
+         if (currentFrame.isDone() && frameIterator.hasNext()) {
               currentFrame = frameIterator.next();
          }
          currentFrame.addRoll(i);
@@ -29,7 +29,7 @@ public class BowlingGame {
 
     public String toJson() {
         String frameLine = "";
-        for (Frame frame : frames.stream().limit(4).collect(Collectors.toList())) {
+        for (Frame frame : frames.stream().limit(7).collect(Collectors.toList())) {
             frameLine += "        " + frame.getString() + ",\n";
         }
         return "{\n" +
