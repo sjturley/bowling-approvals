@@ -3,17 +3,40 @@
  */
 package bowling.approvals;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
 public class BowlingGame {
+    LinkedList<Frame> frames = new LinkedList<>();
+    Frame currentFrame;
+    Iterator<Frame> frameIterator;
+
+    public BowlingGame() {
+        for (int i = 0; i < 10; i++) {
+            frames.add(new Frame(frames.peekLast()));
+        }
+        frameIterator = frames.iterator();
+        currentFrame = frameIterator.next();
+    }
 
     public void roll(int i) {
-
+         if (currentFrame.isDone()) {
+              currentFrame = frameIterator.next();
+         }
+         currentFrame.addRoll(i);
     }
 
     public String toJson() {
+        String frameLine = "";
+        for (Frame frame : frames.stream().limit(3).collect(Collectors.toList())) {
+            frameLine += "        " + frame.getString() + ",\n";
+        }
         return "{\n" +
                 "    frames: [\n" +
-                "        {\"firstRoll\": 0, \"secondRoll\": 0, frameScore: 0, runningScore: 0},\n" +
+                frameLine +
                 "    ]\n" +
                 "}";
     }
+
 }
