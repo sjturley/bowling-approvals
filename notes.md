@@ -5,4 +5,5 @@
 * This will not work for multiple strikes in a row
 * Try this as an HTML line for output
 * Implement isScored concept on frames. display score when it becomes available
+* I want a library that can score a game interactively showing the running score in the frame when the score is available. 
 
