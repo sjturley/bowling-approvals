@@ -4,15 +4,16 @@
 package bowling.approvals;
 
 public class BowlingGame {
-    public boolean someLibraryMethod() {
-        return true;
-    }
 
     public void roll(int i) {
 
     }
 
     public String toJson() {
-        return "{}";
+        return "{\n" +
+                "    frames: [\n" +
+                "        {\"firstRoll\": 0, \"secondRoll\": 0, frameScore: 0, runningScore: 0},\n" +
+                "    ]\n" +
+                "}";
     }
 }

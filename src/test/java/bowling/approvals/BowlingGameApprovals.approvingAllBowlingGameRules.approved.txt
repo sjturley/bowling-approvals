@@ -1,5 +1,5 @@
 {
     frames: [
-        {"firstRoll": 0, "secondRoll": 0, frameScore: 0, runningScore: 0}
+        {"firstRoll": 0, "secondRoll": 0, frameScore: 0, runningScore: 0},
     ]
 }
