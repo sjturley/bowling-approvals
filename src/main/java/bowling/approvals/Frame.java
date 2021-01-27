@@ -7,14 +7,14 @@ public class Frame {
     Integer runningScore;
     Frame previousFrame;
 
-    FrameScoreState state = new OpenScoringState(this);
+    FrameScoreState state = null;
 
     public Frame(Frame previousFrame) {
         this.previousFrame = previousFrame;
     }
 
     public void addRoll(int roll) {
-        if (firstRoll == null) {
+        if (isFirstRollOfFrame()) {
             firstRoll = roll;
             if (wasStrike()) {
                 state = new StrikeScoringState(this);
@@ -24,37 +24,50 @@ public class Frame {
             secondRoll = roll;
             if(wasSpare()) {
                 state = new SpareScoringState(this);
+            } else  {
+                state = new OpenScoringState(this);
             }
             closeFrame();
         }
-    }
-
-    private void closeFrame() {
-        // done in the state
-        if (previousFrame != null) {
-            previousFrame.state.potentiallyAddBonusToFrame(firstRoll, secondRoll);
-        }
-        frameScore = state.calculateFrameScore(firstRoll, secondRoll);
-        runningScore = calculateRunningScore();
-    }
-
-    public boolean wasStrike() {
-        return firstRoll == 10;
-    }
-
-    public boolean wasSpare() {
-        return !wasStrike() && firstRoll + secondRoll == 10;
     }
 
     public boolean isDone() {
         return firstRoll != null && (wasStrike() || secondRoll != null);
     }
 
+    public boolean wasSpare() {
+        return !wasStrike() && firstRoll + secondRoll == 10;
+    }
+
+    private boolean isFirstRollOfFrame() {
+        return firstRoll == null;
+    }
+
+    private void closeFrame() {
+        if (!isFirstFrame()) {
+            previousFrame.potentiallyAddBonusToFrame(firstRoll, secondRoll);
+        }
+        frameScore = state.calculateFrameScore(firstRoll, secondRoll);
+        runningScore = calculateRunningScore();
+    }
+
+    private void potentiallyAddBonusToFrame(Integer firstRoll, Integer secondRoll) {
+        state.potentiallyAddBonusToFrame(firstRoll, secondRoll);
+    }
+
+    public boolean wasStrike() {
+        return firstRoll == 10;
+    }
+
     private int calculateRunningScore() {
-        if (previousFrame == null) {
+        if (isFirstFrame()) {
             return frameScore;
         }
         return frameScore + previousFrame.getRunningScore();
+    }
+
+    private boolean isFirstFrame() {
+        return previousFrame == null;
     }
 
     String getString() {
