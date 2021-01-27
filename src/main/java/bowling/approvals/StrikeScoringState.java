@@ -5,15 +5,9 @@ public class StrikeScoringState extends FrameScoreState {
         super(frame);
     }
 
-//    @Override
-//    public void potentiallyAddBonusToPreviousFrame(Integer firstRoll, Integer secondRoll) {
-//        if (frame.previousFrame != null && (frame.previousFrame.wasStrike())) {
-//            frame.previousFrame.frameScore += frame.firstRoll + frame.secondRoll;
-//            frame.previousFrame.runningScore += frame.firstRoll + frame.secondRoll;
-//        }
-//        else if (frame.previousFrame != null && (frame.previousFrame.wasSpare())) {
-//            frame.previousFrame.frameScore += frame.firstRoll;
-//            frame.previousFrame.runningScore += frame.firstRoll;
-//        }
-//    }
+    @Override
+    public void potentiallyAddBonusToFrame(Integer firstRoll, Integer secondRoll) {
+        frame.frameScore += firstRoll + secondRoll;
+        frame.runningScore += firstRoll + secondRoll;
+    }
 }

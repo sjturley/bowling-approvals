@@ -32,9 +32,8 @@ public class Frame {
     private void closeFrame() {
         // done in the state
         if (previousFrame != null) {
-            previousFrame.state.potentiallyAddBonusToPreviousFrame(firstRoll, secondRoll);
+            previousFrame.state.potentiallyAddBonusToFrame(firstRoll, secondRoll);
         }
-//        frameScore = state.score(firstRoll, secondRoll, previousFrame);
         frameScore = firstRoll + (this.secondRoll == null ? 0 : this.secondRoll);
         runningScore = calculateRunningScore();
     }
