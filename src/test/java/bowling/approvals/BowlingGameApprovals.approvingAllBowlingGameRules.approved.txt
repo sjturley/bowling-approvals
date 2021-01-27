@@ -7,5 +7,8 @@
         {"firstRoll": 1, "secondRoll": 0, frameScore: 1, runningScore: 26},
         {"firstRoll": 10, "secondRoll": null, frameScore: 16, runningScore: 42},
         {"firstRoll": 5, "secondRoll": 1, frameScore: 6, runningScore: 48},
+        {"firstRoll": 0, "secondRoll": 0, frameScore: 0, runningScore: 48},
+        {"firstRoll": 0, "secondRoll": 0, frameScore: 0, runningScore: 48},
+        {"firstRoll": 10, "secondRoll": 10, thirdRoll: 10, frameScore: 30, runningScore: 78},
     ]
 }

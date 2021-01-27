@@ -13,9 +13,11 @@ public class BowlingGame {
     Iterator<Frame> frameIterator;
 
     public BowlingGame() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             frames.add(new Frame(frames.peekLast()));
         }
+        frames.add(new TenthFrame(frames.peekLast()));
+
         frameIterator = frames.iterator();
         currentFrame = frameIterator.next();
     }
@@ -29,7 +31,7 @@ public class BowlingGame {
 
     public String toJson() {
         String frameLine = "";
-        for (Frame frame : frames.stream().limit(7).collect(Collectors.toList())) {
+        for (Frame frame : frames) {
             frameLine += "        " + frame.getString() + ",\n";
         }
         return "{\n" +

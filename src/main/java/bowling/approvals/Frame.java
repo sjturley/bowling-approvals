@@ -39,11 +39,11 @@ public class Frame {
         return !wasStrike() && firstRoll + secondRoll == 10;
     }
 
-    private boolean isFirstRollOfFrame() {
+    protected boolean isFirstRollOfFrame() {
         return firstRoll == null;
     }
 
-    private void closeFrame() {
+    protected void closeFrame() {
         if (!isFirstFrame()) {
             previousFrame.potentiallyAddBonusToFrame(firstRoll, secondRoll);
         }
