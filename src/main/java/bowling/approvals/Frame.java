@@ -1,7 +1,5 @@
 package bowling.approvals;
 
-import java.util.List;
-
 public class Frame {
     Integer firstRoll;
     Integer secondRoll;
@@ -18,10 +16,25 @@ public class Frame {
             firstRoll = roll;
         } else {
             secondRoll = roll;
-
-            frameScore = firstRoll + secondRoll;
-            runningScore = calculateRunningScore();
+            closeFrame();
         }
+    }
+
+    private void closeFrame() {
+        potentiallyAddBonusToPreviousFrame();
+        frameScore = firstRoll + secondRoll;
+        runningScore = calculateRunningScore();
+    }
+
+    private void potentiallyAddBonusToPreviousFrame() {
+        if (previousFrame != null && previousFrame.wasSpare()) {
+            previousFrame.frameScore += firstRoll;
+            previousFrame.runningScore += firstRoll;
+        }
+    }
+
+    private boolean wasSpare() {
+        return firstRoll + secondRoll == 10;
     }
 
     public boolean isDone() {

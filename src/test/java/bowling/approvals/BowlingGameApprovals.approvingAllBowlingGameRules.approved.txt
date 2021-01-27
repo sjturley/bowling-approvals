@@ -3,5 +3,6 @@
         {"firstRoll": 0, "secondRoll": 0, frameScore: 0, runningScore: 0},
         {"firstRoll": 2, "secondRoll": 6, frameScore: 8, runningScore: 8},
         {"firstRoll": 5, "secondRoll": 1, frameScore: 6, runningScore: 14},
+        {"firstRoll": 5, "secondRoll": 5, frameScore: 11, runningScore: 25},
     ]
 }

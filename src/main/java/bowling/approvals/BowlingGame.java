@@ -29,7 +29,7 @@ public class BowlingGame {
 
     public String toJson() {
         String frameLine = "";
-        for (Frame frame : frames.stream().limit(3).collect(Collectors.toList())) {
+        for (Frame frame : frames.stream().limit(4).collect(Collectors.toList())) {
             frameLine += "        " + frame.getString() + ",\n";
         }
         return "{\n" +
