@@ -10,4 +10,9 @@ public class StrikeScoringState extends FrameScoreState {
         frame.frameScore += firstRoll + secondRoll;
         frame.runningScore += firstRoll + secondRoll;
     }
+
+    @Override
+    int calculateFrameScore(Integer firstRoll, Integer secondRoll) {
+        return firstRoll;
+    }
 }

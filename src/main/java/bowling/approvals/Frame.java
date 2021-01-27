@@ -34,7 +34,7 @@ public class Frame {
         if (previousFrame != null) {
             previousFrame.state.potentiallyAddBonusToFrame(firstRoll, secondRoll);
         }
-        frameScore = firstRoll + (this.secondRoll == null ? 0 : this.secondRoll);
+        frameScore = state.calculateFrameScore(firstRoll, secondRoll);
         runningScore = calculateRunningScore();
     }
 

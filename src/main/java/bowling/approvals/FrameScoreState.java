@@ -8,4 +8,6 @@ public abstract class FrameScoreState {
     }
 
     abstract public void potentiallyAddBonusToFrame(Integer firstRoll, Integer secondRoll);
+
+    abstract int calculateFrameScore(Integer firstRoll, Integer secondRoll);
 }

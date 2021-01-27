@@ -9,4 +9,9 @@ public class OpenScoringState extends FrameScoreState {
     public void potentiallyAddBonusToFrame(Integer firstRoll, Integer secondRoll) {
 
     }
+
+    @Override
+    int calculateFrameScore(Integer firstRoll, Integer secondRoll) {
+        return firstRoll + secondRoll;
+    }
 }
