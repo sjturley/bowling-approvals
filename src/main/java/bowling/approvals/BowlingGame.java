@@ -4,7 +4,6 @@
 package bowling.approvals;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BowlingGame {
     ArrayList<Integer> rolls = new ArrayList<>();
@@ -15,11 +14,10 @@ public class BowlingGame {
     public String score() {
         String frameRollRecord = "";
         String frameScore = "";
-        for(int i = 0; i < 9; i++) {
-            String firstFrameLine = getFrameLine(i);
-            String firstFrameScore = getFrameScore(i);
-            frameRollRecord += firstFrameLine;
-            frameScore += "|  " + firstFrameScore + " ";
+        for(int frameIndex = 0; frameIndex < 9; frameIndex++) {
+            Frame frame = new Frame(frameIndex, rolls);
+            frameRollRecord += frame.getFrameLine(frameIndex);
+            frameScore += frame.getScoreBox(frameIndex);
         }
 
         frameRollRecord += "|  |_|_|\n";
@@ -28,37 +26,6 @@ public class BowlingGame {
                 frameRollRecord +
                 frameScore +
                 LINE_FOOTER;
-    }
-
-    private String getFrameLine(int frameIndex) {
-        int rollIndex1 = frameIndex * 2;
-        int rollIndex2 = frameIndex * 2 + 1;
-        String firstRoll = getRollString(rollIndex1);
-        String secondRoll = getSecondFrameRollString(rollIndex2);
-        return "|  " + firstRoll + "|" + secondRoll;
-    }
-
-    private String getFrameScore(int frameIndex) {
-        int rollIndex1 = frameIndex * 2;
-        int rollIndex2 = frameIndex * 2 + 1;
-        if (rolls.size() > rollIndex2) {
-            return String.format("% 2d", rolls.get(rollIndex1) + rolls.get(rollIndex2));
-        }
-        return "  ";
-    }
-
-    private String getRollString(int index) {
-        if (rolls.size() <= index) return " ";
-        if (rolls.get(index) == 0) return "-";
-
-        return rolls.get(index).toString();
-    }
-
-    private String getSecondFrameRollString(int index) {
-        if (rolls.size() <= index) return "_";
-        if (rolls.get(index) == 0) return "-";
-
-        return rolls.get(index).toString();
     }
 
     public void roll(int roll) {
