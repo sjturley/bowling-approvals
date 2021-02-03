@@ -5,44 +5,21 @@ package bowling.approvals;
 
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BowlingGameApprovals {
     @Test
-    void approvingAllBowlingGameRules() {
+    public void scoring() {
+        Integer[][] games = {{}, {5}};
         BowlingGame bowlingGame = new BowlingGame();
-
-        // Frame 1 (0)
-        bowlingGame.roll(0);
-        bowlingGame.roll(0);
-        // Frame 2 (8)
-        bowlingGame.roll(2);
-        bowlingGame.roll(6);
-        // Frame 3 (6) - 14
-        bowlingGame.roll(5);
-        bowlingGame.roll(1);
-        // Frame 4 (11) - 25
-        bowlingGame.roll(5);
-        bowlingGame.roll(5);
-        // Frame 5 (1) - 26
-        bowlingGame.roll(1);
-        bowlingGame.roll(0);
-        // Frame 6 (16) - 42
-        bowlingGame.roll(10);
-        // Frame 7 (6) - 48
-        bowlingGame.roll(5);
-        bowlingGame.roll(1);
-        // Frame 8 (0) - 48
-        bowlingGame.roll(0);
-        bowlingGame.roll(0);
-        // Frame 9 (0) - 48
-        bowlingGame.roll(0);
-        bowlingGame.roll(0);
-        // Frame 10 (30) - 78
-        bowlingGame.roll(10);
-        bowlingGame.roll(10);
-        bowlingGame.roll(10);
-
-        Approvals.verify(bowlingGame.toJson());
+        Approvals.verifyAll("", games, array -> {
+            for(int roll : array) {
+                bowlingGame.roll(roll);
+            }
+            return Arrays.toString(array) + "\n" + bowlingGame.score() + "\n";
+        });
     }
 }

@@ -3,42 +3,24 @@
  */
 package bowling.approvals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class BowlingGame {
-    LinkedList<Frame> frames = new LinkedList<>();
-    Frame currentFrame;
-    Iterator<Frame> frameIterator;
+    ArrayList<Integer> rolls = new ArrayList<>();
 
-    public BowlingGame() {
-        for (int i = 0; i < 9; i++) {
-            frames.add(new Frame(frames.peekLast()));
-        }
-        frames.add(new TenthFrame(frames.peekLast()));
-
-        frameIterator = frames.iterator();
-        currentFrame = frameIterator.next();
+    public String score() {
+        String firstRoll = rolls.size() == 0 ? " " : rolls.get(0).toString();
+        return " ____________________________________________________________\n" +
+                "|__1__|__2__|__3__|__4__|__5__|__6__|__7__|__8__|__9__|__10__|\n" +
+                "| " + firstRoll + " |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n" +
+                "|     |     |     |     |     |     |     |     |     |      |\n" +
+                "|_____|_____|_____|_____|_____|_____|_____|_____|_____|______|";
     }
 
-    public void roll(int i) {
-         if (currentFrame.isDone() && frameIterator.hasNext()) {
-              currentFrame = frameIterator.next();
-         }
-         currentFrame.addRoll(i);
+    public void roll(int roll) {
+        rolls.add(roll);
     }
-
-    public String toJson() {
-        String frameLine = "";
-        for (Frame frame : frames) {
-            frameLine += "        " + frame.getString() + ",\n";
-        }
-        return "{\n" +
-                "    frames: [\n" +
-                frameLine +
-                "    ]\n" +
-                "}";
-    }
-
 }
