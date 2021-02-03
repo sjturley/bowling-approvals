@@ -13,18 +13,17 @@ public class BowlingGame {
     public static final String LINE_FOOTER = "|_____|_____|_____|_____|_____|_____|_____|_____|_____|______|";
 
     public String score() {
-        String firstFrameLine = getFrameLine(0);
-        String firstFrameScore = getFrameScore(0);
+        String frameRollRecord = "";
+        String frameScore = "";
+        for(int i = 0; i < 2; i++) {
+            String firstFrameLine = getFrameLine(i);
+            String firstFrameScore = getFrameScore(i);
+            frameRollRecord += firstFrameLine;
+            frameScore += "|  " + firstFrameScore + " ";
+        }
 
-        String secondFrameLine = getFrameLine(1);
-        String secondFrameScore = "  ";
-
-        String frameRollRecord = firstFrameLine
-                + secondFrameLine +
-                "|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n";
-        String frameScore = "|  " + firstFrameScore + " " +
-                            "|  " + secondFrameScore + " " +
-                                                                                                                                        "|     |     |     |     |     |     |     |      |\n";
+        frameRollRecord += "|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n";
+        frameScore += "|     |     |     |     |     |     |     |      |\n";
         return LINE_HEADER +
                 frameRollRecord +
                 frameScore +
@@ -41,8 +40,10 @@ public class BowlingGame {
     }
 
     private String getFrameScore(int frameIndex) {
-        if (rolls.size() == 2) {
-            return String.format("% 2d", rolls.get(0) + rolls.get(1));
+        int rollIndex1 = frameIndex * 2;
+        int rollIndex2 = frameIndex * 2 + 1;
+        if (rolls.size() > rollIndex2) {
+            return String.format("% 2d", rolls.get(rollIndex1) + rolls.get(rollIndex2));
         }
         return "  ";
     }
