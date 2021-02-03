@@ -22,8 +22,11 @@ public class BowlingGame {
         frames[9] = new TenthFrame();
 
         int frameIndex = 0;
+        int lastScore = 0;
         for(; frameIndex < (rolls.size()) / 2; frameIndex++) {
-            frames[frameIndex] = new CompleteFrame(frameIndex, rolls);
+            FullFrame completeFrame = new FullFrame(frameIndex, rolls, lastScore);
+            lastScore += completeFrame.getFrameSum();
+            frames[frameIndex] = completeFrame;
         }
         if (frameIndex < (rolls.size() +1) / 2 ) {
             frames[frameIndex] = new PartialFrame(frameIndex, rolls);
