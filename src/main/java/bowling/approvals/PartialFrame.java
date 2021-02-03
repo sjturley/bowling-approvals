@@ -1,13 +1,11 @@
 package bowling.approvals;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PartialFrame implements Frame {
-    private int frameIndex;
-    public ArrayList<Integer> rolls;
+    public List<Integer> rolls;
 
-    public PartialFrame(int frameIndex, ArrayList<Integer> rolls) {
-        this.frameIndex = frameIndex;
+    public PartialFrame(List<Integer> rolls) {
         this.rolls = rolls;
     }
 
@@ -27,8 +25,8 @@ public class PartialFrame implements Frame {
 
     @Override
     public String getFrameLine() {
-        int rollIndex1 = frameIndex * 2;
-        int rollIndex2 = frameIndex * 2 + 1;
+        int rollIndex1 = 0;
+        int rollIndex2 = 1;
         String firstRoll = getRollString(rollIndex1);
         String secondRoll = getSecondFrameRollString(rollIndex2);
         return "|  " + firstRoll + "|" + secondRoll;
@@ -36,7 +34,7 @@ public class PartialFrame implements Frame {
 
     @Override
     public String getScoreBox() {
-        String frameScore = getFrameScore(frameIndex);
+        String frameScore = getFrameScore(0);
         return "|  " + frameScore + " ";
     }
 }

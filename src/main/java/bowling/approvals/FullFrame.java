@@ -1,14 +1,13 @@
 package bowling.approvals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FullFrame implements Frame {
-    private int frameIndex;
-    public ArrayList<Integer> rolls;
+    public List<Integer> rolls;
     private int lastScore;
 
-    public FullFrame(int frameIndex, ArrayList<Integer> rolls, int lastScore) {
-        this.frameIndex = frameIndex;
+    public FullFrame(List<Integer> rolls, int lastScore) {
         this.rolls = rolls;
         this.lastScore = lastScore;
     }
@@ -43,26 +42,36 @@ public class FullFrame implements Frame {
     }
 
     private int sumOfRolls() {
+        if (isStrike()) {
+            return 10;
+        }
         return this.rolls.get(indexOfFirstRollInFrame()) + this.rolls.get(indexOfSecondRollInFrame());
     }
 
     @Override
     public String getFrameLine() {
+        if (isStrike()) {
+            return "|   |X";
+        }
         String firstRoll = getRollString(indexOfFirstRollInFrame());
         String secondRoll = getSecondFrameRollString(indexOfSecondRollInFrame());
         return "|  " + firstRoll + "|" + secondRoll;
     }
 
+    public boolean isStrike() {
+        return this.rolls.get(indexOfFirstRollInFrame()) == 10;
+    }
+
     private int indexOfFirstRollInFrame() {
-        return frameIndex * 2;
+        return 0;
     }
 
     private int indexOfSecondRollInFrame() {
-        return indexOfFirstRollInFrame() + 1;
+        return 1;
     }
 
     private int indexOfFirstRollInNextFrame() {
-        return indexOfFirstRollInFrame() + 2;
+        return 2;
     }
 
     @Override

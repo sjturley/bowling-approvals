@@ -4,9 +4,10 @@
 package bowling.approvals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BowlingGame {
-    ArrayList<Integer> rolls = new ArrayList<>();
+    List<Integer> rolls = new ArrayList<>();
     public static final String LINE_HEADER = " ____________________________________________________________\n" +
             "|__1__|__2__|__3__|__4__|__5__|__6__|__7__|__8__|__9__|__10__|\n";
     public static final String LINE_FOOTER = "|_____|_____|_____|_____|_____|_____|_____|_____|_____|______|";
@@ -23,16 +24,23 @@ public class BowlingGame {
 
         int frameIndex = 0;
         int lastScore = 0;
-        for(; frameIndex < (rolls.size()) / 2; frameIndex++) {
-
-            // is a spare needs next roll
-            FullFrame completeFrame = new FullFrame(frameIndex, rolls, lastScore);
+        for(; rolls.size() >= 2; frameIndex++) {
+            FullFrame completeFrame = new FullFrame(this.rolls, lastScore);
             lastScore += completeFrame.getFrameSum();
-
             frames[frameIndex] = completeFrame;
+            int advance = 2;
+            if (completeFrame.isStrike()) {
+                advance = 1;
+            }
+            this.rolls = this.rolls.subList(advance, this.rolls.size());
         }
-        if (frameIndex < (rolls.size() +1) / 2 ) {
-            frames[frameIndex] = new PartialFrame(frameIndex, rolls);
+        if (rolls.size() > 0) {
+            if (rolls.get(0) == 10) {
+                FullFrame completeFrame = new FullFrame(this.rolls, lastScore);
+                frames[frameIndex] = completeFrame;
+            } else {
+                frames[frameIndex] = new PartialFrame(this.rolls);
+            }
         }
 
         for(Frame frame : frames) {
