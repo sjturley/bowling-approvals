@@ -14,14 +14,26 @@ public class BowlingGame {
     public String score() {
         String frameRollRecord = "";
         String frameScore = "";
-        for(int frameIndex = 0; frameIndex < 9; frameIndex++) {
-            Frame frame = new Frame(frameIndex, rolls);
-            frameRollRecord += frame.getFrameLine(frameIndex);
-            frameScore += frame.getScoreBox(frameIndex);
+
+        Frame[] frames = new Frame[10];
+        for(int i = 0; i < 9; i++) {
+            frames[i] = new NullFrame();
+        }
+        frames[9] = new TenthFrame();
+
+        int frameIndex = 0;
+        for(; frameIndex < (rolls.size()) / 2; frameIndex++) {
+            frames[frameIndex] = new CompleteFrame(frameIndex, rolls);
+        }
+        if (frameIndex < (rolls.size() +1) / 2 ) {
+            frames[frameIndex] = new PartialFrame(frameIndex, rolls);
         }
 
-        frameRollRecord += "|  |_|_|\n";
-        frameScore += "|      |\n";
+        for(Frame frame : frames) {
+            frameRollRecord += frame.getFrameLine();
+            frameScore += frame.getScoreBox();
+        }
+
         return LINE_HEADER +
                 frameRollRecord +
                 frameScore +

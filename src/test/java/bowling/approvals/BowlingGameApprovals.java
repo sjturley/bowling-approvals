@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BowlingGameApprovals {
     @Test
     public void scoring() {
-        Integer[][] games = {{}, {5}, {0}, {1,2}};
+        Integer[][] games = {{}, {5}, {0}, {1,2}, {3,4,5,1,7,0}};
         Approvals.verifyAll("", games, array -> {
             BowlingGame bowlingGame = new BowlingGame();
             for(int roll : array) {
