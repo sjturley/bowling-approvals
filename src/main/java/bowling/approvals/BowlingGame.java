@@ -13,15 +13,31 @@ public class BowlingGame {
     public static final String LINE_FOOTER = "|_____|_____|_____|_____|_____|_____|_____|_____|_____|______|";
 
     public String score() {
-        String firstRoll = getRollString(0);
-        String secondRoll = getSecondFrameRollString(1);
+        String firstFrameLine = getFrameLine(0);
         String firstFrameScore = getFrameScore(0);
-        String frameRollRecord = "|  " + firstRoll + "|" + secondRoll + "|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n";
-        String frameScore = "|  " + firstFrameScore + " |     |     |     |     |     |     |     |     |      |\n";
+
+        String secondFrameLine = getFrameLine(1);
+        String secondFrameScore = "  ";
+
+        String frameRollRecord = firstFrameLine
+                + secondFrameLine +
+                "|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n";
+        String frameScore = "|  " + firstFrameScore + " " +
+                            "|  " + secondFrameScore + " " +
+                                                                                                                                        "|     |     |     |     |     |     |     |      |\n";
         return LINE_HEADER +
                 frameRollRecord +
                 frameScore +
                 LINE_FOOTER;
+    }
+
+    private String getFrameLine(int frameIndex) {
+        int rollIndex1 = frameIndex * 2;
+        int rollIndex2 = frameIndex * 2 + 1;
+        String firstRoll = getRollString(rollIndex1);
+        String secondRoll = getSecondFrameRollString(rollIndex2);
+        String firstFrameLine = "|  " + firstRoll + "|" + secondRoll;
+        return firstFrameLine;
     }
 
     private String getFrameScore(int frameIndex) {
@@ -32,7 +48,7 @@ public class BowlingGame {
     }
 
     private String getRollString(int index) {
-        if (rolls.size() == 0) return " ";
+        if (rolls.size() <= index) return " ";
         if (rolls.get(index) == 0) return "-";
 
         return rolls.get(index).toString();
