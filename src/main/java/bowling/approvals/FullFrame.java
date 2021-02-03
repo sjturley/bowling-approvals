@@ -27,25 +27,54 @@ public class FullFrame implements Frame {
 
     private String getFrameScore() {
         int totalScore = getFrameSum() + lastScore;
-        if (totalScore > 9) {
-            return String.valueOf(totalScore);
+        return leftPadTensPlace(totalScore);
+    }
+
+    private String leftPadTensPlace(int totalScore) {
+        return totalScore > 9 ? String.valueOf(totalScore) : " " + totalScore;
+    }
+
+    public int getFrameSum() {
+        int frameSum = sumOfRolls();
+        if (frameSum == 10 && hasAnotherRoll()) {
+            frameSum += this.rolls.get(indexOfFirstRollInNextFrame());
         }
-        return " " + totalScore;
+        return frameSum;
+    }
+
+    private int sumOfRolls() {
+        return this.rolls.get(indexOfFirstRollInFrame()) + this.rolls.get(indexOfSecondRollInFrame());
     }
 
     @Override
     public String getFrameLine() {
-        String firstRoll = getRollString(frameIndex * 2);
-        String secondRoll = getSecondFrameRollString(frameIndex * 2 + 1);
+        String firstRoll = getRollString(indexOfFirstRollInFrame());
+        String secondRoll = getSecondFrameRollString(indexOfSecondRollInFrame());
         return "|  " + firstRoll + "|" + secondRoll;
+    }
+
+    private int indexOfFirstRollInFrame() {
+        return frameIndex * 2;
+    }
+
+    private int indexOfSecondRollInFrame() {
+        return indexOfFirstRollInFrame() + 1;
+    }
+
+    private int indexOfFirstRollInNextFrame() {
+        return indexOfFirstRollInFrame() + 2;
     }
 
     @Override
     public String getScoreBox() {
-        return "|  " + getFrameScore() + " ";
+        String score = getFrameScore();
+        if (sumOfRolls() == 10 && !hasAnotherRoll()) {
+            score = "  ";
+        }
+        return "|  " + score + " ";
     }
 
-    public int getFrameSum() {
-        return this.rolls.get(frameIndex * 2) + this.rolls.get(frameIndex * 2 + 1);
+    private boolean hasAnotherRoll() {
+        return this.rolls.size() > indexOfFirstRollInNextFrame();
     }
 }
