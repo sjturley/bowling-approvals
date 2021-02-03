@@ -4,20 +4,45 @@
 package bowling.approvals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class BowlingGame {
     ArrayList<Integer> rolls = new ArrayList<>();
+    public static final String LINE_HEADER = " ____________________________________________________________\n" +
+            "|__1__|__2__|__3__|__4__|__5__|__6__|__7__|__8__|__9__|__10__|\n";
+    public static final String LINE_FOOTER = "|_____|_____|_____|_____|_____|_____|_____|_____|_____|______|";
 
     public String score() {
-        String firstRoll = rolls.size() == 0 ? " " : rolls.get(0).toString();
-        return " ____________________________________________________________\n" +
-                "|__1__|__2__|__3__|__4__|__5__|__6__|__7__|__8__|__9__|__10__|\n" +
-                "| " + firstRoll + " |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n" +
-                "|     |     |     |     |     |     |     |     |     |      |\n" +
-                "|_____|_____|_____|_____|_____|_____|_____|_____|_____|______|";
+        String firstRoll = getRollString(0);
+        String secondRoll = getSecondFrameRollString(1);
+        String firstFrameScore = getFrameScore(0);
+        String frameRollRecord = "|  " + firstRoll + "|" + secondRoll + "|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n";
+        String frameScore = "|  " + firstFrameScore + " |     |     |     |     |     |     |     |     |      |\n";
+        return LINE_HEADER +
+                frameRollRecord +
+                frameScore +
+                LINE_FOOTER;
+    }
+
+    private String getFrameScore(int frameIndex) {
+        if (rolls.size() == 2) {
+            return String.format("% 2d", rolls.get(0) + rolls.get(1));
+        }
+        return "  ";
+    }
+
+    private String getRollString(int index) {
+        if (rolls.size() == 0) return " ";
+        if (rolls.get(index) == 0) return "-";
+
+        return rolls.get(index).toString();
+    }
+
+    private String getSecondFrameRollString(int index) {
+        if (rolls.size() <= index) return "_";
+        if (rolls.get(index) == 0) return "-";
+
+        return rolls.get(index).toString();
     }
 
     public void roll(int roll) {

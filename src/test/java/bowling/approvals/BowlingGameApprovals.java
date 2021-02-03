@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class BowlingGameApprovals {
     @Test
     public void scoring() {
-        Integer[][] games = {{}, {5}};
-        BowlingGame bowlingGame = new BowlingGame();
+        Integer[][] games = {{}, {5}, {0}, {1,2}};
         Approvals.verifyAll("", games, array -> {
+            BowlingGame bowlingGame = new BowlingGame();
             for(int roll : array) {
                 bowlingGame.roll(roll);
             }
