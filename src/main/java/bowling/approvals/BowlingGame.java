@@ -15,15 +15,15 @@ public class BowlingGame {
     public String score() {
         String frameRollRecord = "";
         String frameScore = "";
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 9; i++) {
             String firstFrameLine = getFrameLine(i);
             String firstFrameScore = getFrameScore(i);
             frameRollRecord += firstFrameLine;
             frameScore += "|  " + firstFrameScore + " ";
         }
 
-        frameRollRecord += "|   |_|   |_|   |_|   |_|   |_|   |_|   |_|  |_|_|\n";
-        frameScore += "|     |     |     |     |     |     |     |      |\n";
+        frameRollRecord += "|  |_|_|\n";
+        frameScore += "|      |\n";
         return LINE_HEADER +
                 frameRollRecord +
                 frameScore +
@@ -35,8 +35,7 @@ public class BowlingGame {
         int rollIndex2 = frameIndex * 2 + 1;
         String firstRoll = getRollString(rollIndex1);
         String secondRoll = getSecondFrameRollString(rollIndex2);
-        String firstFrameLine = "|  " + firstRoll + "|" + secondRoll;
-        return firstFrameLine;
+        return "|  " + firstRoll + "|" + secondRoll;
     }
 
     private String getFrameScore(int frameIndex) {
