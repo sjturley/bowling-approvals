@@ -8,6 +8,9 @@ public interface Frame {
     default String leftPad(int totalScore) {
         String score = String.valueOf(totalScore);
         if (score.length() == 1) {
+            score = "  " + score;
+        }
+        if (score.length() == 2) {
             score = " " + score;
         }
         return score;

@@ -82,9 +82,9 @@ public class FullFrame implements Frame {
     public String getScoreBox() {
         String score = getFrameScore();
         if (sumOfRolls() == 10 && !hasAnotherRoll()) {
-            score = "  ";
+            score = "   ";
         }
-        return "|  " + score + " ";
+        return "| " + score + " ";
     }
 
     private boolean hasAnotherRoll() {

@@ -47,13 +47,13 @@ public class TenthFrame implements Frame {
         if (lastScore != null && rolls != null && rolls.size() >= 2) {
             String score = "";
             if (sumOfRolls() == 10 && !hasAnotherRoll()) {
-                score = "  ";
+                score = "   ";
             } else if(sumOfRolls() == 10) {
                 score = this.leftPad(lastScore + sumOfRolls() + this.rolls.get(2));
             } else {
                 score = this.leftPad(lastScore + sumOfRolls());
             }
-            return "| " + score + "   |\n";
+            return "|" + score + "   |\n";
         }
         return "|      |\n";
     }
