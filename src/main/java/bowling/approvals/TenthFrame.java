@@ -14,14 +14,27 @@ public class TenthFrame implements Frame {
         if (rolls != null) {
             String firstRoll = getFirstRoll();
             String secondRoll = getSecondRoll();
-            String thirdRoll = rolls.size() > 2 ? rolls.get(2).toString() : "_";
+            String thirdRoll = getThirdRoll();
             return "| " + firstRoll + "|" + secondRoll + "|" + thirdRoll + "|\n";
         }
         return "|  |_|_|\n";
     }
 
+    private String getThirdRoll() {
+        if (rolls.size() > 2) {
+            if (rolls.get(2) == 10) {
+                return "X";
+            }
+            return rolls.get(2).toString();
+        }
+        return "_";
+    }
+
     private String getFirstRoll() {
         if (this.rolls.get(0) == 0) return "-";
+        if (rolls.get(0) == 10) {
+            return "X";
+        }
 
         return rolls.get(0).toString();
     }
@@ -30,6 +43,9 @@ public class TenthFrame implements Frame {
         if (rolls.size() > 1) {
             if (sumOfRolls() == 10) {
                 return "/";
+            }
+            if (rolls.get(1) == 10) {
+                return "X";
             }
             if (this.rolls.get(1) == 0) return "-";
 
@@ -48,7 +64,7 @@ public class TenthFrame implements Frame {
             String score = "";
             if (sumOfRolls() == 10 && !hasAnotherRoll()) {
                 score = "   ";
-            } else if(sumOfRolls() == 10) {
+            } else if(this.rolls.get(0) == 10 || sumOfRolls() == 10) {
                 score = this.leftPad(lastScore + sumOfRolls() + this.rolls.get(2));
             } else {
                 score = this.leftPad(lastScore + sumOfRolls());

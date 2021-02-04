@@ -34,6 +34,7 @@ class BowlingGameApprovals {
                 , {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 7, 4}
                 , {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
                 , {10, 10, 10, 10, 10, 10, 10, 10}
+                , {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}
         };
         Approvals.verifyAll("", games, array -> {
             BowlingGame bowlingGame = new BowlingGame();
