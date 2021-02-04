@@ -69,7 +69,7 @@ public class TenthFrame implements Frame {
             } else {
                 score = this.leftPad(lastScore + sumOfRolls());
             }
-            return "|" + score + "   |\n";
+            return "| " + score + "  |\n";
         }
         return "|      |\n";
     }
