@@ -1,6 +1,5 @@
 package bowling.approvals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FullFrame implements Frame {
@@ -26,17 +25,17 @@ public class FullFrame implements Frame {
 
     private String getFrameScore() {
         int totalScore = getFrameSum() + lastScore;
-        return leftPadTensPlace(totalScore);
-    }
-
-    private String leftPadTensPlace(int totalScore) {
-        return totalScore > 9 ? String.valueOf(totalScore) : " " + totalScore;
+        return leftPad(totalScore);
     }
 
     public int getFrameSum() {
         int frameSum = sumOfRolls();
         if (frameSum == 10 && hasAnotherRoll()) {
-            frameSum += this.rolls.get(indexOfFirstRollInNextFrame());
+            if (isStrike()) {
+                frameSum += this.rolls.get(1) + this.rolls.get(2);
+            } else {
+                frameSum += this.rolls.get(indexOfFirstRollInNextFrame());
+            }
         }
         return frameSum;
     }

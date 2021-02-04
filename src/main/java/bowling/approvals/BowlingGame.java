@@ -20,11 +20,12 @@ public class BowlingGame {
         for(int i = 0; i < 9; i++) {
             frames[i] = new NullFrame();
         }
-        frames[9] = new TenthFrame();
+        TenthFrame tenthFrame = new TenthFrame();
+        frames[9] = tenthFrame;
 
         int frameIndex = 0;
         int lastScore = 0;
-        for(; rolls.size() >= 2; frameIndex++) {
+        for(; rolls.size() >= 2 && frameIndex != 9; frameIndex++) {
             FullFrame completeFrame = new FullFrame(this.rolls, lastScore);
             lastScore += completeFrame.getFrameSum();
             frames[frameIndex] = completeFrame;
@@ -34,13 +35,17 @@ public class BowlingGame {
             }
             this.rolls = this.rolls.subList(advance, this.rolls.size());
         }
-        if (rolls.size() > 0) {
+
+        if (rolls.size() > 0 && frameIndex != 9) {
             if (rolls.get(0) == 10) {
                 FullFrame completeFrame = new FullFrame(this.rolls, lastScore);
                 frames[frameIndex] = completeFrame;
             } else {
                 frames[frameIndex] = new PartialFrame(this.rolls);
             }
+        } else if (rolls.size() > 0) {
+            tenthFrame.setRolls(rolls);
+            tenthFrame.setLastScore(lastScore);
         }
 
         for(Frame frame : frames) {
