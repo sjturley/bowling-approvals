@@ -12,9 +12,14 @@ public class FullFrame implements Frame {
     }
 
     private String getSecondFrameRollString(int index) {
-        if (this.rolls.get(index) == 0) return "-";
-
-        return this.rolls.get(index).toString();
+        if (rolls.size() > 1) {
+            if (sumOfRolls() == 10) {
+                return "/";
+            }
+            if (this.rolls.get(index) == 0) return "-";
+            return rolls.get(1).toString();
+        }
+        return "_";
     }
 
     private String getRollString(int index) {

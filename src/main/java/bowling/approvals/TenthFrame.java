@@ -12,12 +12,30 @@ public class TenthFrame implements Frame {
     @Override
     public String getFrameLine() {
         if (rolls != null) {
-            String firstRoll = rolls.get(0).toString();
-            String secondRoll = rolls.size() > 1 ? rolls.get(1).toString() : "_";
+            String firstRoll = getFirstRoll();
+            String secondRoll = getSecondRoll();
             String thirdRoll = rolls.size() > 2 ? rolls.get(2).toString() : "_";
             return "| " + firstRoll + "|" + secondRoll + "|" + thirdRoll + "|\n";
         }
         return "|  |_|_|\n";
+    }
+
+    private String getFirstRoll() {
+        if (this.rolls.get(0) == 0) return "-";
+
+        return rolls.get(0).toString();
+    }
+
+    private String getSecondRoll() {
+        if (rolls.size() > 1) {
+            if (sumOfRolls() == 10) {
+                return "/";
+            }
+            if (this.rolls.get(1) == 0) return "-";
+
+            return rolls.get(1).toString();
+        }
+        return "_";
     }
 
     private boolean hasAnotherRoll() {
