@@ -27,7 +27,7 @@ public class BowlingGame {
         int lastScore = 0;
         for(; rolls.size() >= 2 && frameIndex != 9; frameIndex++) {
             FullFrame completeFrame = new FullFrame(this.rolls, lastScore);
-            lastScore += completeFrame.getFrameSum();
+            lastScore += completeFrame.fullFrameDomain.getFrameSum();
             frames[frameIndex] = completeFrame;
             int advance = 2;
             if (completeFrame.isStrike()) {

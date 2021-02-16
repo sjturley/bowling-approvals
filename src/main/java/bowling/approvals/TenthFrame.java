@@ -3,86 +3,78 @@ package bowling.approvals;
 import java.util.List;
 
 public class TenthFrame implements Frame {
-    private List<Integer> rolls;
-    private Integer lastScore;
+    protected final TenthFrameDomain fullFrameDomain = new TenthFrameDomain();
 
     public TenthFrame() {
     }
 
     @Override
     public String getFrameLine() {
-        if (rolls != null) {
-            String firstRoll = getFirstRoll();
-            String secondRoll = getSecondRoll();
-            String thirdRoll = getThirdRoll();
+        if (fullFrameDomain.rolls != null) {
+            String firstRoll = getFirstRollString();
+            String secondRoll = getSecondRollString();
+            String thirdRoll = getThirdRollString();
             return "| " + firstRoll + "|" + secondRoll + "|" + thirdRoll + "|\n";
         }
         return "|  |_|_|\n";
     }
 
-    private String getThirdRoll() {
-        if (rolls.size() > 2) {
-            if (rolls.get(2) == 10) {
-                return "X";
-            }
-            return rolls.get(2).toString();
-        }
-        return "_";
-    }
-
-    private String getFirstRoll() {
-        if (this.rolls.get(0) == 0) return "-";
-        if (rolls.get(0) == 10) {
+    private String getFirstRollString() {
+        if (fullFrameDomain.rolls.get(fullFrameDomain.FIRST_ROLL) == 10) {
             return "X";
         }
 
-        return rolls.get(0).toString();
+        if (this.fullFrameDomain.rolls.get(fullFrameDomain.FIRST_ROLL) == 0) return "-";
+
+        return fullFrameDomain.rolls.get(fullFrameDomain.FIRST_ROLL).toString();
     }
 
-    private String getSecondRoll() {
-        if (rolls.size() > 1) {
-            if (sumOfRolls() == 10) {
-                return "/";
-            }
-            if (rolls.get(1) == 10) {
+    private String getSecondRollString() {
+        if (fullFrameDomain.rolls.size() > 1) {
+            if (fullFrameDomain.rolls.get(fullFrameDomain.SECOND_ROLL) == 10) {
                 return "X";
             }
-            if (this.rolls.get(1) == 0) return "-";
+        }
 
-            return rolls.get(1).toString();
+        if (fullFrameDomain.rolls.size() > 1) {
+            if (fullFrameDomain.isSpare()) {
+                return "/";
+            }
+            if (this.fullFrameDomain.rolls.get(fullFrameDomain.SECOND_ROLL) == 0) return "-";
+
+            return fullFrameDomain.rolls.get(fullFrameDomain.SECOND_ROLL).toString();
         }
         return "_";
     }
 
-    private boolean hasAnotherRoll() {
-        return this.rolls.size() > 2;
+    private String getThirdRollString() {
+        if (fullFrameDomain.rolls.size() > 2) {
+            if (fullFrameDomain.rolls.get(fullFrameDomain.THIRD_ROLL) == 10) {
+                return "X";
+            }
+            return fullFrameDomain.rolls.get(fullFrameDomain.THIRD_ROLL).toString();
+        }
+        return "_";
     }
 
     @Override
     public String getScoreBox() {
-        if (lastScore != null && rolls != null && rolls.size() >= 2) {
-            String score = "";
-            if (sumOfRolls() == 10 && !hasAnotherRoll()) {
-                score = "   ";
-            } else if(this.rolls.get(0) == 10 || sumOfRolls() == 10) {
-                score = this.leftPad(lastScore + sumOfRolls() + this.rolls.get(2));
-            } else {
-                score = this.leftPad(lastScore + sumOfRolls());
-            }
-            return "| " + score + "  |\n";
-        }
-        return "|      |\n";
-    }
+        String score = "   ";
+        if (fullFrameDomain.lastScore != null && fullFrameDomain.rolls != null && fullFrameDomain.rolls.size() >= 2) {
+            int frameSum = fullFrameDomain.getFrameSum() + fullFrameDomain.lastScore;
 
-    private int sumOfRolls() {
-        return rolls.get(0) + rolls.get(1);
+            if (!fullFrameDomain.isSpare() || this.fullFrameDomain.hasAnotherRoll()) {
+                score = this.leftPad(frameSum);
+            }
+        }
+        return "| " + score + "  |\n";
     }
 
     public void setRolls(List<Integer> rolls) {
-        this.rolls = rolls;
+        this.fullFrameDomain.rolls = rolls;
     }
 
     public void setLastScore(int lastScore) {
-        this.lastScore = lastScore;
+        this.fullFrameDomain.lastScore = lastScore;
     }
 }
